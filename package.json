@@ -62,12 +62,13 @@
 		"vitest": "^3.2.3"
 	},
 	"dependencies": {
-		"@supabase/supabase-js": "^2.58.0",
 		"@tanstack/svelte-query": "^6.0.0",
 		"@tanstack/table-core": "^8.21.3",
 		"@tsparticles/engine": "^3.9.1",
 		"@tsparticles/slim": "^3.9.1",
 		"fuse.js": "^7.1.0",
+		"graphql": "^16.12.0",
+		"graphql-request": "^7.4.0",
 		"uuid": "^13.0.0"
 	}
 }

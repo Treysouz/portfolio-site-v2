@@ -8,11 +8,6 @@ on:
         required: false
         default: ''
         type: string
-    secrets:
-      SUPABASE_URL:
-        required: true
-      SUPABASE_KEY:
-        required: true
     outputs:
       tests-passed:
         description: 'Whether all tests passed'
@@ -22,9 +17,6 @@ jobs:
   test:
     name: Run Tests
     runs-on: ubuntu-latest
-    env:
-      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-      SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
     outputs:
       success: ${{ steps.mark-success.outputs.success }}
 
