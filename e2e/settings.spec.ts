@@ -1,4 +1,10 @@
 import { test, expect } from '@playwright/test';
+import {
+	mockTechEndpoint,
+	mockTechCategoryEndpoint,
+	mockExperienceEndpoint,
+	mockProjectEndpoint
+} from './fixtures/mocks';
 
 test.describe('Settings Drawer', () => {
 	test.beforeEach(async ({ page }) => {
@@ -7,6 +13,12 @@ test.describe('Settings Drawer', () => {
 
 		// Clear localStorage
 		await page.evaluate(() => localStorage.clear());
+
+		//Mock API calls
+		await mockTechEndpoint(page);
+		await mockTechCategoryEndpoint(page);
+		await mockExperienceEndpoint(page);
+		await mockProjectEndpoint(page);
 	});
 
 	test.describe('Drawer Toggle', () => {

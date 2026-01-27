@@ -1,7 +1,7 @@
 <!--Tech card component to render inside the tech table-->
 
 <script lang="ts">
-	import { Card, Icon } from '$lib/components';
+	import { Card, Icon, Badge } from '$lib/components';
 	import type { Tech } from '$lib/types/tech.types';
 
 	interface Props {
@@ -26,8 +26,6 @@
 					class="text-accent size-3 sm:size-4"></Icon>
 			{/each}
 		</div>
-		<span
-			class="badge badge-outline h-full py-1 text-center text-xs leading-3 tracking-tighter sm:text-nowrap"
-			>{category?.name}</span>
+		<Badge>{category?.name}</Badge>
 	</div>
 </Card>

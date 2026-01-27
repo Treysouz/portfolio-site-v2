@@ -168,6 +168,9 @@
 				columnFilters: columnFilterState,
 				sorting: sortingState
 			},
+			enableFilters: true,
+			enableSorting: true,
+			enableGlobalFilter: true,
 			getCoreRowModel: getCoreRowModel(),
 			manualFiltering: true,
 			onGlobalFilterChange: handleGlobalFilterChange,

@@ -1,18 +1,4 @@
-import type { QueryClient } from '@tanstack/svelte-query';
 import type { ApiError, QueryOptions, FetchFn } from '../../types/api.types';
-
-/**
- * Returns value from Tanstack cache at given key
- * @param {QueryClient} queryClient - TanStack query client for cache
- * @param {cacheKey} unknown[] - Key to lookup in cache
- * @returns {NonNullable<T> | undefined} Cache value
- */
-const getCachedData = <T>(queryClient: QueryClient, cacheKey: unknown[]) => {
-	const cachedData = queryClient.getQueryData<T>(cacheKey);
-	if (cachedData) {
-		return cachedData;
-	}
-};
 
 /**
  * Constructs a SvelteKit error object from an API error
@@ -49,7 +35,10 @@ export const post = async <T>(
 
 	// Check cache if QueryClient and cacheKey provided
 	if (queryClient && cacheKey) {
-		getCachedData<T>(queryClient, cacheKey);
+		const cachedData = queryClient.getQueryData<T>(cacheKey);
+		if (cachedData) {
+			return cachedData;
+		}
 	}
 
 	// Make the request
@@ -93,7 +82,10 @@ export const get = async <T>(
 
 	// Check cache if QueryClient and cacheKey provided
 	if (queryClient && cacheKey) {
-		getCachedData<T>(queryClient, cacheKey);
+		const cachedData = queryClient.getQueryData<T>(cacheKey);
+		if (cachedData) {
+			return cachedData;
+		}
 	}
 
 	const request = {

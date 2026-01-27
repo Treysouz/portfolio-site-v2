@@ -1,7 +1,7 @@
 import type { QueryClient } from '@tanstack/svelte-query';
 import { get } from '../api';
 
-import type { TechCategory, PostResponse } from '../../types/techCategory.types';
+import type { TechCategory, GetResponse } from '../../types/techCategory.types';
 import type { FetchFn } from '$lib/types/api.types';
 
 export const getTechCategoryData = async (
@@ -10,7 +10,7 @@ export const getTechCategoryData = async (
 ): Promise<TechCategory[]> => {
 	const cacheKey = ['techCategory'];
 
-	const response = await get<PostResponse>(
+	const response = await get<GetResponse>(
 		'/techCategory',
 		{
 			queryClient,

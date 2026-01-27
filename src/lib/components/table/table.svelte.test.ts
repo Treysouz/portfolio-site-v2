@@ -48,6 +48,9 @@ const createMockTableOptions = (data: TestEntity[]): TableOptions<TestEntity> =>
 	state: {
 		sorting: [{ id: 'name', desc: false }]
 	},
+	enableFilters: true,
+	enableSorting: true,
+	enableGlobalFilter: true,
 	onColumnFiltersChange: mockOnColumnFiltersChange,
 	onSortingChange: mockOnSortingChange,
 	onGlobalFilterChange: mockOnGlobalFilterChange
@@ -208,7 +211,7 @@ describe('Table component', () => {
 				label: 'Test Table'
 			});
 
-			const searchBox = screen.getByPlaceholderText('Search for tech');
+			const searchBox = screen.getByRole('textbox', { name: 'Test Table' });
 			await fireEvent.input(searchBox, { target: { value: 'Item 1' } });
 
 			expect(mockOnGlobalFilterChange).not.toHaveBeenCalled();

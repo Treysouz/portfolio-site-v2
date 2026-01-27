@@ -16,8 +16,8 @@ beforeEach(() => {
 	vi.resetAllMocks();
 });
 
-describe('GET /data/techCategory', () => {
-	it('should return tech category data', async () => {
+describe('GET /data/project', () => {
+	it('should return project data', async () => {
 		// Mock GraphQL response
 		mockGqlRequest.mockResolvedValue({ techCategories: MOCK_TECH_CATEGORIES });
 

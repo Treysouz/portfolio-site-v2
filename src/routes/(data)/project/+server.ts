@@ -5,9 +5,18 @@ import { gql, request as gqlRequest } from 'graphql-request';
 
 export const GET = async (): Promise<Response> => {
 	const document = gql`
-		query getTechCategories {
-			techCategories {
+		query getProjects {
+			projects {
 				name
+				techTools {
+					name
+				}
+				description
+				image {
+					url
+				}
+				github
+				url
 			}
 		}
 	`;
@@ -18,7 +27,7 @@ export const GET = async (): Promise<Response> => {
 	});
 
 	if (response.error) {
-		const { status, message } = getErrorData('Failed to load Tech Category data', response.error);
+		const { status, message } = getErrorData('Failed to load Project data', response.error);
 		error(status, message);
 	}
 

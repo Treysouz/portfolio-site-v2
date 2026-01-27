@@ -16,4 +16,4 @@
 	);
 </script>
 
-<ErrorState svg={isError ? 'grimmace' : 'frown'} {header} {message}></ErrorState>
+<ErrorState svg={isError ? 'grimace' : 'frown'} {header} {message}></ErrorState>

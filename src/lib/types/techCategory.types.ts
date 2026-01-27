@@ -15,7 +15,7 @@ export type TechCategory = {
 	name: TechCategoryName;
 };
 
-/** Request response for POST /data/tech endpoint. */
-export interface PostResponse {
+/** Request response for GET /data/techCategory endpoint. */
+export interface GetResponse {
 	techCategories: TechCategory[];
 }

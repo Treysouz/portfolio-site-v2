@@ -1,44 +1,11 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest';
-import { queryTechData } from './techCategory.utils';
-import { post } from '../api/api.utils';
-import type { Tech } from '$lib/types/tech.types';
+import { getTechCategoryData } from './techCategory.utils';
+import { get } from '../api/api.utils';
+import { MOCK_TECH_CATEGORIES } from '$lib/mocks/constants.mocks';
 
 vi.mock('../api/api.utils', () => ({
-	post: vi.fn()
+	get: vi.fn()
 }));
-
-const mockTechData: Tech[] = [
-	{
-		imgUrl: '/vitest.webp',
-		name: 'Vitest',
-		proficiency: 5,
-		type: 'Testing & QA'
-	},
-	{
-		imgUrl: '/BitBucket.webp',
-		name: 'BitBucket',
-		proficiency: 5,
-		type: 'Project Management'
-	},
-	{
-		imgUrl: '/Bootstrap.webp',
-		name: 'Bootstrap',
-		proficiency: 5,
-		type: 'Frameworks & Libraries'
-	},
-	{
-		imgUrl: 'react.webp',
-		name: 'React',
-		proficiency: 5,
-		type: 'Frameworks & Libraries'
-	},
-	{
-		imgUrl: '/Codecov.webp',
-		name: 'Codecov',
-		proficiency: 5,
-		type: 'Build & DevOps'
-	}
-];
 
 const mockQueryClient = {
 	getQueryData: vi.fn(),
@@ -47,42 +14,28 @@ const mockQueryClient = {
 
 beforeEach(() => {
 	vi.resetAllMocks();
-	vi.mocked(post).mockResolvedValue(mockTechData);
+	vi.mocked(get).mockResolvedValue({ techCategories: MOCK_TECH_CATEGORIES });
 });
 
-describe('tech.utils', () => {
-	describe('queryTechData()', () => {
-		it('should call post with correct URL and payload', async () => {
-			await queryTechData(mockQueryClient, 'React', ['Frameworks & Libraries'], {
-				column: 'name',
-				ascending: true
-			});
+describe('techCategory.utils', () => {
+	describe('getTechCategoryData()', () => {
+		it('should call get with correct URL and payload', async () => {
+			await getTechCategoryData(mockQueryClient);
 
-			expect(post).toHaveBeenCalledWith(
-				'/tech',
-				{
-					value: 'React',
-					types: ['Frameworks & Libraries'],
-					sort: { column: 'name', ascending: true }
-				},
+			expect(get).toHaveBeenCalledWith(
+				'/techCategory',
 				{
 					queryClient: mockQueryClient,
-					cacheKey: [
-						'tech',
-						{
-							value: 'React',
-							types: ['Frameworks & Libraries'],
-							sort: { column: 'name', ascending: true }
-						}
-					]
-				}
+					cacheKey: ['techCategory']
+				},
+				undefined
 			);
 		});
 
-		it('should return tech data from post response', async () => {
-			const result = await queryTechData(mockQueryClient);
+		it('should return tech data from get response', async () => {
+			const result = await getTechCategoryData(mockQueryClient);
 
-			expect(result).toEqual(mockTechData);
+			expect(result).toEqual(MOCK_TECH_CATEGORIES);
 		});
 	});
 });
