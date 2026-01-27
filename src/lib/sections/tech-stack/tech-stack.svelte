@@ -15,8 +15,16 @@
 		type ColumnFiltersState,
 		type SortingState
 	} from '@tanstack/table-core';
-	import type { TechTypeOption } from './tech-stack.types';
-	import type { SortConfig, Tech, TechType } from '$lib/types/tech.types';
+
+	import type { SortConfig, Tech } from '$lib/types/tech.types';
+	import type { TechCategoryName, TechCategory } from '$lib/types/techCategory.types';
+
+	interface Props {
+		/** Tech type options for filtering */
+		techTypeOptions: TechCategory[];
+	}
+
+	let { techTypeOptions }: Props = $props();
 
 	/** Array of tech data fetched from the API */
 	let data: Tech[] = $state([]);
@@ -34,34 +42,6 @@
 	/** Loading state indicator for data fetching */
 	let loading: boolean = $state(true);
 
-	/** Tech type options for filtering */
-	const TECH_TYPE_OPTIONS: TechTypeOption[] = [
-		{
-			type: 'Hosting & Infrastructure'
-		},
-		{
-			type: 'Programming Languages'
-		},
-		{
-			type: 'Frameworks & Libraries'
-		},
-		{
-			type: 'Build & DevOps'
-		},
-		{
-			type: 'Project Management'
-		},
-		{
-			type: 'Testing & QA'
-		},
-		{
-			type: 'Design'
-		},
-		{
-			type: 'Dev Env'
-		}
-	];
-
 	/** Tanstack Query client instance for data fetching and caching */
 	const queryClient = useQueryClient();
 
@@ -71,7 +51,7 @@
 	 * @param columnFilters - Column filters
 	 * @param sorting - Current sorting order
 	 */
-	const queryData = async (
+	const setTableData = async (
 		searchValue?: string,
 		columnFilters?: ColumnFiltersState,
 		sorting?: SortingState
@@ -81,10 +61,10 @@
 			const techTypeFilterState = columnFilters?.find((f) => f.id === 'type');
 			const filterValue = techTypeFilterState?.value;
 
-			let selectedTechTypes: TechType[] = [];
+			let selectedTechTypes: TechCategoryName[] = [];
 			if (Array.isArray(filterValue)) {
-				selectedTechTypes = filterValue?.map((option: TechTypeOption) => {
-					return option.type;
+				selectedTechTypes = filterValue?.map((option: TechCategory) => {
+					return option.name;
 				});
 			}
 
@@ -146,12 +126,12 @@
 	 * @returns Table configuration
 	 */
 	const createTableOptions = (data: Tech[]): TableOptions<Tech> => {
-		const typeFilterConfig: FilterConfig<TechTypeOption> = {
+		const typeFilterConfig: FilterConfig<TechCategory> = {
 			filterType: 'multi-select',
-			data: TECH_TYPE_OPTIONS,
+			data: techTypeOptions,
 			multiple: true,
-			idKey: 'type',
-			nameKey: 'type',
+			idKey: 'name',
+			nameKey: 'name',
 			label: 'Tech Type',
 			placeholder: 'Select a Tech Type'
 		};
@@ -203,7 +183,7 @@
 	 * Gets new data if filter state or sorting state for the table change.
 	 */
 	$effect(() => {
-		queryData(globalFilterValue, columnFilterState, sortingState);
+		setTableData(globalFilterValue, columnFilterState, sortingState);
 	});
 </script>
 

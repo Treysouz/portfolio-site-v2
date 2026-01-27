@@ -92,8 +92,8 @@
 
 			sortingOptions = [
 				...sortingOptions,
-				{ id: `${id}-desc`, header, desc: false, columnId: id, label: `${header} Ascending` },
-				{ id: `${id}-asc`, header, desc: true, columnId: id, label: `${header} Descending` }
+				{ id: `${id}-asc`, header, desc: false, columnId: id, label: `${header} Ascending` },
+				{ id: `${id}-desc`, header, desc: true, columnId: id, label: `${header} Descending` }
 			];
 		});
 	};
@@ -109,6 +109,10 @@
 			const sortingOrder = sortingOptions.find((option) => {
 				return option.columnId === sortingOptionId;
 			});
+
+			if (sortingOrder) {
+				sortingOrder.desc = state[0].desc;
+			}
 
 			selectedSortingOrder = sortingOrder ? [sortingOrder] : [];
 		} else {

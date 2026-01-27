@@ -12,7 +12,7 @@
 
 <AboutSection></AboutSection>
 
-<TechStackSection></TechStackSection>
+<TechStackSection techTypeOptions={data.techTypeOptions || []}></TechStackSection>
 
 <ProjectSection></ProjectSection>
 

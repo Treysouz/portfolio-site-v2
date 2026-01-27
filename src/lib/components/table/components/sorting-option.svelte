@@ -8,7 +8,6 @@
 		/**Sorting option config*/
 		option: SortingOptionConfig;
 	}
-
 	let { option }: Props = $props();
 </script>
 
