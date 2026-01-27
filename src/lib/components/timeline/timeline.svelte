@@ -2,6 +2,7 @@
 
 <script lang="ts">
 	import { Icon, IconWrapper, ErrorState } from '$lib/components';
+	import DOMPurify from 'dompurify';
 
 	import type { ExperienceItem } from '$lib/types/experience.types';
 
@@ -21,6 +22,11 @@
 		{
 			return undefined;
 		}
+	};
+
+	const sanitize = (html?: string) => {
+		if (!html) return '';
+		return DOMPurify.sanitize(html);
 	};
 </script>
 
@@ -46,8 +52,8 @@
 					>{getYear(experience.startedAt)}{experience?.endedAt
 						? ` - ${getYear(experience.endedAt)}`
 						: ''}</span>
-
-				<div class="timeline-list text-sm">{@html experience.description?.html}</div>
+				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+				<div class="timeline-list text-sm">{@html sanitize(experience.description?.html)}</div>
 			</div>
 		{/each}
 	{:else}

@@ -9,9 +9,6 @@
 		project: Project;
 	}
 
-	/** Class for Nav Items*/
-	const NAV_ITEM_CLASS = 'md:size-30 p-2 sm:p-4';
-
 	let { project }: Props = $props();
 
 	let { name, image, description, github, url, techTools } = $derived(project);
