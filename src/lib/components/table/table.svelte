@@ -11,17 +11,19 @@
 	import type { FormEventHandler } from 'svelte/elements';
 
 	interface Props {
-		/** Accessible label for the table */
+		/** Accessible label for the table search box */
 		label: string;
 		/** Tanstack Table configuration options */
 		options: TableOptions<Entity>;
 		/** Snippet for rendering individual table rows */
 		tableItem: Snippet<[Row<Entity>]>;
+		/** Whether to have the grid items be wide format or regular*/
+		wideLayout?: boolean;
 		/** Array of data entities to display */
 		data?: Entity[];
 		/** Whether data is currently loading */
 		loading?: boolean;
-		/** Whether an error occurerd while getting data */
+		/** Whether an error occurred while getting data */
 		errorThrown?: boolean;
 	}
 
@@ -29,6 +31,7 @@
 		options,
 		tableItem,
 		label,
+		wideLayout = false,
 		loading = false,
 		data = undefined,
 		errorThrown = false
@@ -92,8 +95,8 @@
 
 			sortingOptions = [
 				...sortingOptions,
-				{ id: `${id}-desc`, header, desc: false, columnId: id, label: `${header} Ascending` },
-				{ id: `${id}-asc`, header, desc: true, columnId: id, label: `${header} Descending` }
+				{ id: `${id}-asc`, header, desc: false, columnId: id, label: `${header} Ascending` },
+				{ id: `${id}-desc`, header, desc: true, columnId: id, label: `${header} Descending` }
 			];
 		});
 	};
@@ -109,6 +112,10 @@
 			const sortingOrder = sortingOptions.find((option) => {
 				return option.columnId === sortingOptionId;
 			});
+
+			if (sortingOrder) {
+				sortingOrder.desc = state[0].desc;
+			}
 
 			selectedSortingOrder = sortingOrder ? [sortingOrder] : [];
 		} else {
@@ -148,13 +155,16 @@
 
 <div class="flex h-full min-h-0 flex-col space-y-4 sm:space-y-8">
 	<div class="z-10 flex w-full flex-row flex-wrap items-center gap-4 sm:gap-8 xl:flex-nowrap">
-		<Textbox
-			name={label}
-			type="search"
-			class="w-full md:max-w-lg"
-			placeholder="Search for tech"
-			debounce={500}
-			oninput={updateGlobalFilter}></Textbox>
+		{#if options.enableGlobalFilter}
+			<Textbox
+				name={label}
+				aria-label={label}
+				type="search"
+				class="w-full md:max-w-lg"
+				placeholder="Search"
+				debounce={500}
+				oninput={updateGlobalFilter}></Textbox>
+		{/if}
 		<div class="flex w-full flex-row flex-wrap gap-4 sm:gap-8 md:flex-nowrap">
 			{#each filterableColums as column (column.id)}
 				{@const canFilter = column.getCanFilter()}
@@ -177,21 +187,23 @@
 				{/if}
 			{/each}
 
-			<Combobox
-				label="Sort Table"
-				options={sortingOptions}
-				idKey="id"
-				nameKey="header"
-				class="md:w-xs w-full"
-				placeholder="--Sort table--"
-				value={selectedSortingOrder}
-				onselect={updateSorting}>
-				{#snippet selectedItemComponent(value)}
-					<SortingOption option={value[0]}></SortingOption>
-				{/snippet}
-				{#snippet listItemComponent(option)}
-					<SortingOption {option}></SortingOption>
-				{/snippet}</Combobox>
+			{#if options.enableSorting}
+				<Combobox
+					label="Sort Table"
+					options={sortingOptions}
+					idKey="id"
+					nameKey="header"
+					class="md:w-xs w-full"
+					placeholder="--Sort table--"
+					value={selectedSortingOrder}
+					onselect={updateSorting}>
+					{#snippet selectedItemComponent(value)}
+						<SortingOption option={value[0]}></SortingOption>
+					{/snippet}
+					{#snippet listItemComponent(option)}
+						<SortingOption {option}></SortingOption>
+					{/snippet}</Combobox>
+			{/if}
 		</div>
 	</div>
 
@@ -202,12 +214,12 @@
 	{:else if data?.length}
 		<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 		<div
-			class="flex w-full flex-row flex-wrap items-start justify-center gap-4 overflow-auto border-t pt-4 sm:gap-8 sm:pt-8 xl:justify-start"
+			class={`flex w-full ${wideLayout ? 'flex-col' : 'flex-row flex-wrap justify-center'}  items-start  gap-4 overflow-auto border-t pt-4 sm:gap-8 sm:pt-8 xl:justify-start`}
 			role="list"
 			aria-label={label}
 			tabindex="0">
 			{#each table.getRowModel().rows as row (row.id)}
-				<div role="listitem">
+				<div role="listitem" class={wideLayout ? 'w-full' : ''}>
 					{@render tableItem(row)}
 				</div>
 			{/each}

@@ -21,7 +21,7 @@ A portfolio site highlighting my development experience, tech stack, and the pro
 ### Data & State Management
 
 - **[TanStack Query](https://tanstack.com/query/latest)** - Used to cache API responses
-- **[Supabase](https://supabase.com/)** - Backend provider for database and API
+- **[Hygraph](https://hygraph.com/)** - Backend provider for database and API
 
 ### Misc. Libraries
 

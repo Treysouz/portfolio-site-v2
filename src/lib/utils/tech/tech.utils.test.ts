@@ -1,44 +1,11 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest';
 import { queryTechData } from './tech.utils';
 import { post } from '../api/api.utils';
-import type { Tech } from '$lib/types/tech.types';
+import { MOCK_TECH_DATA } from '$lib/mocks/constants.mocks';
 
 vi.mock('../api/api.utils', () => ({
 	post: vi.fn()
 }));
-
-const mockTechData: Tech[] = [
-	{
-		imgUrl: '/vitest.webp',
-		name: 'Vitest',
-		proficiency: 5,
-		type: 'Testing & QA'
-	},
-	{
-		imgUrl: '/BitBucket.webp',
-		name: 'BitBucket',
-		proficiency: 5,
-		type: 'Project Management'
-	},
-	{
-		imgUrl: '/Bootstrap.webp',
-		name: 'Bootstrap',
-		proficiency: 5,
-		type: 'Frameworks & Libraries'
-	},
-	{
-		imgUrl: 'react.webp',
-		name: 'React',
-		proficiency: 5,
-		type: 'Frameworks & Libraries'
-	},
-	{
-		imgUrl: '/Codecov.webp',
-		name: 'Codecov',
-		proficiency: 5,
-		type: 'Build & DevOps'
-	}
-];
 
 const mockQueryClient = {
 	getQueryData: vi.fn(),
@@ -47,7 +14,9 @@ const mockQueryClient = {
 
 beforeEach(() => {
 	vi.resetAllMocks();
-	vi.mocked(post).mockResolvedValue(mockTechData);
+	vi.mocked(post).mockResolvedValue({
+		techTools: MOCK_TECH_DATA
+	});
 });
 
 describe('tech.utils', () => {
@@ -62,7 +31,7 @@ describe('tech.utils', () => {
 				'/tech',
 				{
 					value: 'React',
-					types: ['Frameworks & Libraries'],
+					categories: ['Frameworks & Libraries'],
 					sort: { column: 'name', ascending: true }
 				},
 				{
@@ -71,7 +40,7 @@ describe('tech.utils', () => {
 						'tech',
 						{
 							value: 'React',
-							types: ['Frameworks & Libraries'],
+							categories: ['Frameworks & Libraries'],
 							sort: { column: 'name', ascending: true }
 						}
 					]
@@ -82,7 +51,7 @@ describe('tech.utils', () => {
 		it('should return tech data from post response', async () => {
 			const result = await queryTechData(mockQueryClient);
 
-			expect(result).toEqual(mockTechData);
+			expect(result).toEqual(MOCK_TECH_DATA);
 		});
 	});
 });

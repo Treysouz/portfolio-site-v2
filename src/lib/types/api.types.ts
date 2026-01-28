@@ -21,3 +21,11 @@ export interface QueryOptions {
 	/** Unique cache key array (e.g., ['tech', { filter: 'React' }]) */
 	cacheKey?: unknown[];
 }
+
+/**
+ * Fetch function for API requests
+ */
+export type FetchFn = (
+	input: string | URL | Request,
+	init?: RequestInit | undefined
+) => Promise<Response>;

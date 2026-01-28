@@ -11,3 +11,4 @@ export * from './alert';
 export * from './button';
 export * from './error-state';
 export * from './alert-center';
+export * from './badge';

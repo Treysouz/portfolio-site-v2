@@ -4,7 +4,7 @@ import type { RequestHandler } from './$types';
 export const GET: RequestHandler = async ({ fetch }) => {
 	try {
 		const response = await fetch(
-			'https://kfppfwgizztmqwhyymqq.supabase.co/storage/v1/object/public/Documents/Tremayne%20Souza%20-%20Resume%20-%20Front%20End%20Developer.pdf'
+			'https://us-west-2.graphassets.com/cmkuqb14n3hsx07lh4u5ge3kj/cmkwto21d2hs208lop0ccsi20'
 		);
 
 		if (!response.ok) {

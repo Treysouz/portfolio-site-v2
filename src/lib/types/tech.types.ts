@@ -1,18 +1,20 @@
-import type { Database } from '$lib/types/supabase.types.js';
+import type { TechCategory } from './techCategory.types';
 
-/** Enum of technology types from Supabase */
-export type TechType = Database['public']['Enums']['Tech Type'];
+/** Details of Image file associated with Tech */
+export type TechLogo = {
+	url: string;
+};
 
 /** Represents a technology/tool with its metadata. */
 export type Tech = {
-	/** URL to the tech's logo image */
-	imgUrl?: Database['public']['Tables']['Tech']['Row']['img_url'];
+	/** Details of Image file associated with Tech */
+	image: TechLogo;
 	/** Name of the tech  */
-	name?: Database['public']['Tables']['Tech']['Row']['name'];
+	name: string;
 	/** Proficiency level from 0-5  */
-	proficiency?: number;
-	/** Type of the tech */
-	type?: Database['public']['Enums']['Tech Type'] | null;
+	proficiency: number;
+	/** Category of the tech */
+	category: TechCategory;
 };
 
 /** Configuration for sorting tech data */
@@ -25,10 +27,15 @@ export interface SortConfig {
 
 /** Request payload for POST /data/tech endpoint. */
 export interface PostPayload {
-	/** Filter by one or more technology types */
-	types?: TechType[];
+	/** Filter by one or more technology categories */
+	categories?: string[];
 	/** Text search filter (searches by technology name) */
 	value?: string;
 	/** Sort configuration */
 	sort?: SortConfig;
+}
+
+/** Request response for POST /data/tech endpoint. */
+export interface PostResponse {
+	techTools: Tech[];
 }

@@ -1,8 +1,22 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import {
+	mockTechEndpoint,
+	mockTechCategoryEndpoint,
+	mockExperienceEndpoint,
+	mockProjectEndpoint
+} from './fixtures/mocks';
 
 test.describe('Accessibility', () => {
 	const testRoutes = ['/'];
+
+	test.beforeEach(async ({ page }) => {
+		//Mock API calls
+		await mockTechEndpoint(page);
+		await mockTechCategoryEndpoint(page);
+		await mockExperienceEndpoint(page);
+		await mockProjectEndpoint(page);
+	});
 
 	testRoutes.forEach((route) => {
 		test.describe(`"${route}" Route`, () => {

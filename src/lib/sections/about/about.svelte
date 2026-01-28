@@ -2,10 +2,38 @@
 
 <script lang="ts">
 	import { Card, Timeline, NavItem } from '$lib/components';
+	import type { ExperienceItem } from '$lib/types/experience.types';
+	import { getExperienceData } from '$lib/utils/experience';
 	import { Section } from '../section-wrapper';
+	import { addErrorToStore } from '$lib/stores/alert';
 
 	/** Class for Nav Items*/
-	const navItemClass = 'md:size-30 p-2 sm:p-4';
+	const NAV_ITEM_CLASS = 'md:size-30 p-2 sm:p-4';
+
+	/** Array of experience data fetched from the API */
+	let data: ExperienceItem[] = $state([]);
+
+	/** Loading state indicator for data fetching */
+	let loading: boolean = $state(true);
+
+	/**
+	 * Gets experience data from the API and defines timeline data.
+	 */
+	const setTimelineData = async () => {
+		loading = true;
+		try {
+			const response = await getExperienceData();
+			data = response;
+		} catch (error) {
+			addErrorToStore('Failed to Get Timeline Data', error);
+		} finally {
+			loading = false;
+		}
+	};
+
+	$effect(() => {
+		setTimelineData();
+	});
 </script>
 
 <Section id="about" header="About Me">
@@ -16,7 +44,7 @@
 				<p class="text-sm md:text-base">
 					I've been coding in one way or another for over 13 years — from tinkering with Myspace
 					HTML templates and small school projects to building internal tooling for fast-growing
-					companies. For the past 7 years, I've worked as a professional Front-End Developer pushing
+					companies. For the past 7 years, I've worked as a professional Software Engineer pushing
 					code for startups, large-scale platforms, and entrepreneurs with exciting ideas.
 					<br />
 					<br />
@@ -39,7 +67,7 @@
 					<NavItem
 						svg="document-text"
 						text="Resume"
-						class={navItemClass}
+						class={NAV_ITEM_CLASS}
 						anchorProps={{
 							href: '/resume',
 							target: '_blank',
@@ -48,7 +76,7 @@
 					<NavItem
 						svg="linkedin"
 						text="Linkedin"
-						class={navItemClass}
+						class={NAV_ITEM_CLASS}
 						anchorProps={{
 							href: 'https://www.linkedin.com/in/tremayne-souza-98862b1a5/',
 							target: '_blank',
@@ -57,7 +85,7 @@
 					<NavItem
 						svg="github"
 						text="GitHub"
-						class={navItemClass}
+						class={NAV_ITEM_CLASS}
 						anchorProps={{
 							href: 'https://github.com/Treysouz',
 							target: '_blank',
@@ -66,7 +94,7 @@
 					<NavItem
 						svg="envelope"
 						text="Contact"
-						class={navItemClass}
+						class={NAV_ITEM_CLASS}
 						anchorProps={{
 							href: 'mailto:treysouz@gmail.com',
 							rel: 'noopener'
@@ -76,7 +104,7 @@
 		</div>
 		<Card class="grow p-4 sm:p-8 xl:max-w-md 2xl:max-w-2xl">
 			<div class="pl-4 pt-4">
-				<Timeline></Timeline>
+				<Timeline {data} {loading}></Timeline>
 			</div>
 		</Card>
 	</div>

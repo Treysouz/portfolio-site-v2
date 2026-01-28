@@ -15,7 +15,6 @@
 		isActive?: boolean;
 		/** Handler for item click */
 		onclick?: (event: MouseEvent) => unknown;
-
 		/** Additional CSS classes to apply to the component */
 		class?: string;
 	}

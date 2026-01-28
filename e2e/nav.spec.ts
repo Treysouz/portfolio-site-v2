@@ -1,9 +1,20 @@
 import { test, expect } from '@playwright/test';
+import {
+	mockTechEndpoint,
+	mockTechCategoryEndpoint,
+	mockExperienceEndpoint,
+	mockProjectEndpoint
+} from './fixtures/mocks';
 
 test.describe('Navigation', () => {
 	test.beforeEach(async ({ page }) => {
 		// Navigate to the home page
 		await page.goto('/');
+		//Mock API calls
+		await mockTechEndpoint(page);
+		await mockTechCategoryEndpoint(page);
+		await mockExperienceEndpoint(page);
+		await mockProjectEndpoint(page);
 	});
 
 	const testCases = [

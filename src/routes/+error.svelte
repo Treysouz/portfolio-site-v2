@@ -4,6 +4,6 @@
 </script>
 
 <ErrorState
-	svg="grimmace"
+	svg="grimace"
 	header="Page failed to load"
 	message="Status Code {page.status} - {page.error?.message}"></ErrorState>

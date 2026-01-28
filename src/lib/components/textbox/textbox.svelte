@@ -70,7 +70,7 @@
 		</div>
 	{/if}
 	{#if boxPrefix}
-		<div class="h-full [&>*]:rounded-l-lg">
+		<div class="h-full *:rounded-l-lg">
 			{@render boxPrefix()}
 		</div>
 	{/if}
@@ -82,7 +82,7 @@
 		class="w-full bg-transparent px-1 text-sm placeholder-gray-400 ring-0 sm:text-base"
 		bind:this={inputElement} />
 	{#if boxSuffix}
-		<div class="h-full [&>*]:rounded-r-lg">
+		<div class="h-full *:rounded-r-lg">
 			{@render boxSuffix()}
 		</div>
 	{/if}

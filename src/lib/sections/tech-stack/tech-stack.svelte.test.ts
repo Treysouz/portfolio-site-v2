@@ -3,7 +3,7 @@ import { render, screen, waitFor, fireEvent } from '@testing-library/svelte';
 import TechStack from './tech-stack.svelte';
 import { queryTechData } from '$lib/utils/tech';
 import * as alertStore from '$lib/stores/alert';
-import type { Tech } from '$lib/types/tech.types';
+import { MOCK_TECH_CATEGORIES, MOCK_TECH_DATA } from '$lib/mocks/constants.mocks';
 
 // Mock the tech query utility
 vi.mock('$lib/utils/tech', () => ({
@@ -20,30 +20,9 @@ vi.mock('$lib/stores/alert', () => ({
 	addErrorToStore: vi.fn()
 }));
 
-const mockTechData: Tech[] = [
-	{
-		name: 'React',
-		type: 'Frameworks & Libraries',
-		proficiency: 5,
-		imgUrl: 'react.png'
-	},
-	{
-		name: 'TypeScript',
-		type: 'Programming Languages',
-		proficiency: 4,
-		imgUrl: 'ts.png'
-	},
-	{
-		name: 'Docker',
-		type: 'Build & DevOps',
-		proficiency: 3,
-		imgUrl: 'docker.png'
-	}
-];
-
 beforeEach(() => {
 	vi.resetAllMocks();
-	vi.mocked(queryTechData).mockResolvedValue(mockTechData);
+	vi.mocked(queryTechData).mockResolvedValue(MOCK_TECH_DATA);
 });
 
 describe('Tech Stack Section', () => {
@@ -55,7 +34,7 @@ describe('Tech Stack Section', () => {
 				expect(queryTechData).toHaveBeenCalled();
 			});
 		});
-		it('should fetch tech data with the appropirate params if sorting is defined', async () => {
+		it('should fetch tech data with the appropriate params if sorting is defined', async () => {
 			render(TechStack);
 
 			// Open sorting comobobox
@@ -73,11 +52,11 @@ describe('Tech Stack Section', () => {
 				});
 			});
 		});
-		it('should fetch tech data with the appropirate params if global filter is defined', async () => {
+		it('should fetch tech data with the appropriate params if global filter is defined', async () => {
 			render(TechStack);
 
 			// Enter text for search box
-			const searchBox = screen.getByPlaceholderText('Search for tech');
+			const searchBox = screen.getByRole('textbox', { name: 'Tech List' });
 			await fireEvent.input(searchBox, { target: { value: 'Item 1' } });
 
 			await waitFor(() => {
@@ -87,8 +66,8 @@ describe('Tech Stack Section', () => {
 				});
 			});
 		});
-		it('should fetch tech data with the appropirate params if column filter is defined', async () => {
-			render(TechStack);
+		it('should fetch tech data with the appropriate params if column filter is defined', async () => {
+			render(TechStack, { techTypeOptions: MOCK_TECH_CATEGORIES });
 
 			// Open the Tech Type filter combobox
 			const typeCombobox = screen.getByTitle('Open Tech Type Menu');

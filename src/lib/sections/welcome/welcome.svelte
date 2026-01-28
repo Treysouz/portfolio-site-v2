@@ -23,7 +23,7 @@
 			<br />
 			<p class="text-sm md:text-base lg:text-xl 2xl:text-3xl">
 				I'm a <span class="text-gradient animate-gradient-move font-bold"
-					>NY-based Front-End Developer</span>
+					>NY-based Front-End Software Engineer</span>
 				turning ideas into responsive, accessible, and user-friendly web and mobile applications.
 			</p>
 			<br />

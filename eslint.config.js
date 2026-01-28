@@ -39,7 +39,8 @@ export default defineConfig(
 					varsIgnorePattern: '^_',
 					ignoreRestSiblings: true
 				}
-			]
+			],
+			'svelte/no-at-html-tags': 'warn'
 		}
 	},
 	{
