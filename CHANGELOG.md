@@ -1,3 +1,17 @@
+# [1.15.0](https://github.com/Treysouz/portfolio-site-v2/compare/v1.14.0...v1.15.0) (2026-01-28)
+
+
+### Bug Fixes
+
+* [TSPS-45] - Fixed semantic-release issue ([c619c3e](https://github.com/Treysouz/portfolio-site-v2/commit/c619c3e1900b2eec123e373c0e56c7dfdf7af8e6))
+
+
+### Features
+
+* [TSPS-45] - Added DOM Purify ([b202ec1](https://github.com/Treysouz/portfolio-site-v2/commit/b202ec19f2f97f1c28392f2080e4263f601e94a4))
+* [TSPS-45] - Added projects to project section.  Added necessary endpoints for About and Project sections.  Updated unit tests ([8b1d09f](https://github.com/Treysouz/portfolio-site-v2/commit/8b1d09f0fbd33754ac7fcb80a9c5001819825a5b))
+* [TSPS-45] - Switched to using Hygraph.  Added call to TechCategories query ([522cf23](https://github.com/Treysouz/portfolio-site-v2/commit/522cf23e49bd61079a742834a082ed9847c52a67))
+
 # [1.14.0](https://github.com/Treysouz/PortfolioSiteV2/compare/v1.13.0...v1.14.0) (2025-11-10)
 
 
