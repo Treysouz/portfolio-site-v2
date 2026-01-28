@@ -106,10 +106,10 @@ jobs:
               echo "❌ Semantic release failed with exit code $EXIT_CODE"
               echo "🔍 Check the output above for details"
 
-              # Don't fail the step immediately - let the workflow continue
-              # The calling workflow can check the 'released' output
+              # Fail the step if semantic-release encountered an error
               if [ $EXIT_CODE -ne 0 ]; then
-                echo "⚠️ Warning: Semantic release encountered an error but workflow will continue"
+                echo "❌ Semantic release failed - failing the workflow"
+                exit $EXIT_CODE
               fi
             fi
           fi
