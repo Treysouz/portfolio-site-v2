@@ -5,6 +5,9 @@ export default {
 		'subject-max-length': [2, 'always', 150],
 		'header-max-length': [2, 'always', 150],
 
+		// Disable body line length limit (semantic-release generates long changelog lines)
+		'body-max-line-length': [0, 'always'],
+
 		// Keep conventional commit type validation but allow JIRA format in subject
 		'type-empty': [2, 'never'],
 		'subject-empty': [2, 'never'],
